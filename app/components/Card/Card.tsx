@@ -6,6 +6,7 @@ import VideoIcon from "@/app/svgs/VideoIcon";
 import AudioIcon from "@/app/svgs/AudioIcon";
 import PdfIcon from "@/app/svgs/PdfIcon";
 import MediaIcon from "@/app/svgs/MediaIcon";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface ContentItem {
   id: string;
@@ -31,6 +32,35 @@ const iconComponents: { [key: string]: React.FC } = {
   video: VideoIcon,
 };
 
+export interface SkeletonProp {
+  count?: number;
+}
+
+export const CardSkeleton = ({ count }: SkeletonProp) => {
+  return (
+    <>
+      {Array(count)
+        .fill("")
+        .map((_, i) => (
+          <div
+            key={i}
+            className="flex w-full flex-col overflow-hidden items-center"
+          >
+            <div className="rounded-full w-full overflow-hidden">
+              <AspectRatio ratio={1 / 1}>
+                <Skeleton className="w-full h-full" />
+              </AspectRatio>
+            </div>
+            <div className="flex flex-col items-center">
+              <Skeleton className="mt-[8px] w-[9rem] h-[1.6rem] mb-[4px]" />
+              <Skeleton className="w-[7rem] h-[1.4rem]" />
+            </div>
+          </div>
+        ))}
+    </>
+  );
+};
+
 const Card: React.FC<SingleVideoProps> = ({ id, className, content }) => {
   const IconComponent = iconComponents[content.contentType ?? ""];
 
@@ -44,7 +74,7 @@ const Card: React.FC<SingleVideoProps> = ({ id, className, content }) => {
               alt={content?.title}
               layout="fill"
               objectFit="cover"
-              className="w-full h-full"
+              className="w-full h-full rounded-full"
             />
           )}
         </AspectRatio>

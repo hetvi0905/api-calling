@@ -1,0 +1,29 @@
+.vds-slider-chapter .vds-slider-track-fill {
+  background-color: var(--primary);
+}
+.vds-slider-chapter .vds-slider-progress {
+  background-color: var(--white);
+}
+
+[data-media-player][data-layout='video'] {
+  background-color: var(--video-bg);
+}
+
+:where(.vds-video-layout .vds-controls[data-visible]) {
+  border-radius: 0px;
+}
+[data-media-player][data-layout='video']:not([data-fullscreen]) {
+  border-radius: 0px;
+}
+.vds-video-layout .vds-controls-group:nth-last-child(2) {
+  z-index: 11;
+}
+
+:where(.vds-video-layout .vds-time[data-type='current']) {
+  margin-right: 2px;
+  color: var(--white) !important;
+}
+:where(.vds-video-layout .vds-time[data-type='duration']) {
+  margin-right: 2px;
+  color: var(--grey30) !important;
+}
