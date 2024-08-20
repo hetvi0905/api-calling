@@ -32,6 +32,7 @@ export interface CategoryProps {
   content: ContentItem;
   className?: string;
   id?: string;
+  onClick?: (id: string) => void; // Add this prop
 }
 
 const iconComponents: { [key: string]: React.FC } = {
@@ -72,7 +73,12 @@ export const CategoryCardSkeleton = ({ count }: SkeletonProp) => {
   );
 };
 
-const Category: React.FC<CategoryProps> = ({ id, className, content }) => {
+const Category: React.FC<CategoryProps> = ({
+  id,
+  className,
+  content,
+  onClick,
+}) => {
   const IconComponent = iconComponents[content.contentType ?? ""];
   const OverlayIcon = overlayIconsObj[content?.contentType ?? ""];
 
@@ -81,6 +87,7 @@ const Category: React.FC<CategoryProps> = ({ id, className, content }) => {
       key={content.id}
       id={id}
       className={cn(" w-[130px]  overflow-hidden", className)}
+      onClick={() => onClick?.(content.id)}
     >
       <div className="relative">
         {content.thumbnail && (

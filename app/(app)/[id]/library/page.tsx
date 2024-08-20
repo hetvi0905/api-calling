@@ -4,9 +4,7 @@ import UserLibrary from "@/app/components/UserLibrary/UserLibrary";
 const page = () => {
   return (
     <div>
-      <Link href="/library/content">
-        <UserLibrary />
-      </Link>
+      <UserLibrary />
     </div>
   );
 };

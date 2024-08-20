@@ -26,6 +26,7 @@ export interface SingleVideoProps {
   className?: string;
   id?: string;
   content: ContentItem;
+  onClick?: (id: string) => void; // Add this prop
 }
 
 const iconComponents: { [key: string]: React.FC } = {
@@ -70,6 +71,7 @@ const SingleVideocard: React.FC<SingleVideoProps> = ({
   id,
   className,
   content,
+  onClick,
 }) => {
   const IconComponent = iconComponents[content.contentType ?? ""];
   const OverlayIcon = overlayIconsObj[content?.contentType ?? ""];
@@ -82,6 +84,7 @@ const SingleVideocard: React.FC<SingleVideoProps> = ({
         "bg-white w-[201px] rounded-[8px] overflow-hidden custom-box-shadow",
         className
       )}
+      onClick={() => onClick?.(content.id)} // Trigger onClick with content id
     >
       <div className="relative">
         <AspectRatio ratio={1.63 / 1}>

@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import HorizontalScroll from "../Scrolls/HorizontalScroll";
-import SingleVideocard from "../SingleVideocard/SingleVideocard";
-import Title from "../HeadingTitle/HeadingTitle";
-import { useRouter } from "next/navigation";
-import Card, { CardSkeleton } from "../Card/Card";
-import Category, { CategoryCardSkeleton } from "../Category/Category";
+import HorizontalScroll from "@/app/components/Scrolls/HorizontalScroll";
+import SingleVideocard from "@/app/components/SingleVideocard/SingleVideocard";
+import Title from "@/app/components/HeadingTitle/HeadingTitle";
+import Card, { CardSkeleton } from "@/app/components/Card/Card";
+import Category, {
+  CategoryCardSkeleton,
+} from "@/app/components/Category/Category";
 import { useParams } from "next/navigation";
-import { SingleVidCardSkeleton } from "../SingleVideocard/SingleVideocard";
+import { SingleVidCardSkeleton } from "@/app/components/SingleVideocard/SingleVideocard";
 interface TagContentItem {
   id: string;
   title: string;
@@ -42,7 +43,7 @@ interface ContentItem {
   createdAt: string;
 }
 
-const UserLibrary: React.FC = () => {
+const Page: React.FC = () => {
   const params = useParams<{ id: string }>();
 
   const [latestContent, setLatestContent] = useState<ContentItem[]>([]);
@@ -50,15 +51,14 @@ const UserLibrary: React.FC = () => {
   const [categoryContentData, setCategoryContentData] = useState<
     CategoryResponseItem[]
   >([]);
-  const [guruContentData, setGuruContentData] = useState<ContentItem[]>([]); // Use ContentItem[], not TagContentItem[]
+  const [guruContentData, setGuruContentData] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   const fetchLatestContent = async () => {
     try {
       const response = await fetch(
-        `https://devapi.cohort.social/library/organization/${params.id}/content/latest`
+        `https://devapi.cohort.social/library/philosophy/684ee90a-6498-4c58-a425-bdbe93886eb7/content/latest`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch latest content");
@@ -75,7 +75,7 @@ const UserLibrary: React.FC = () => {
   const fetchCategoryContent = async () => {
     try {
       const response = await fetch(
-        `https://devapi.cohort.social/library/organization/${params.id}/content/category`
+        `https://devapi.cohort.social/library/philosophy/684ee90a-6498-4c58-a425-bdbe93886eb7/content/category`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch category content");
@@ -92,13 +92,13 @@ const UserLibrary: React.FC = () => {
   const fetchGuruContent = async () => {
     try {
       const response = await fetch(
-        `https://devapi.cohort.social/library/organization/${params.id}/content/tags`
+        `https://devapi.cohort.social/library/philosophy/684ee90a-6498-4c58-a425-bdbe93886eb7/content/category`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch content");
       }
       const result = await response.json();
-      setGuruContentData(result.data.content); // Ensure this is an array of ContentItem[]
+      setGuruContentData(result.data.content);
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -109,7 +109,7 @@ const UserLibrary: React.FC = () => {
   const fetchPopularContent = async () => {
     try {
       const response = await fetch(
-        `https://devapi.cohort.social/library/organization/${params.id}/content/populer`
+        `https://devapi.cohort.social/library/philosophy/684ee90a-6498-4c58-a425-bdbe93886eb7/content/populer`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch popular content");
@@ -129,11 +129,6 @@ const UserLibrary: React.FC = () => {
     fetchCategoryContent();
     fetchPopularContent();
   }, []);
-
-  const openPostAudio = (id: string) => {
-    const entityId = params.id; // Get the current entityId from params
-    router.push(`/${entityId}/library/content/${id}`, { scroll: false });
-  };
 
   if (loading) {
     return (
@@ -176,11 +171,7 @@ const UserLibrary: React.FC = () => {
       <HorizontalScroll>
         <div className="flex flex-row gap-4 pt-[9px]">
           {latestContent.map((item) => (
-            <SingleVideocard
-              key={item.id}
-              content={item}
-              onClick={openPostAudio} // Pass openPostAudio here
-            />
+            <SingleVideocard key={item.id} content={item} />
           ))}
         </div>
       </HorizontalScroll>
@@ -191,11 +182,7 @@ const UserLibrary: React.FC = () => {
           <HorizontalScroll>
             <div className="flex flex-row gap-4 pt-[9px]">
               {section.categoryContent?.map((item) => (
-                <Category
-                  key={item.id}
-                  content={item}
-                  onClick={openPostAudio}
-                />
+                <Category key={item.id} content={item} />
               ))}
             </div>
           </HorizontalScroll>
@@ -227,4 +214,4 @@ const UserLibrary: React.FC = () => {
   );
 };
 
-export default UserLibrary;
+export default Page;
