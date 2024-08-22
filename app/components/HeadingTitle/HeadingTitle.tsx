@@ -9,12 +9,7 @@ interface HeadingTitleProps {
 
 const Title: React.FC<HeadingTitleProps> = ({ text, Icon, className }) => {
   return (
-    <h2
-      className={cn(
-        "text-[1.8rem] font-bold flex gap-[0.8rem] items-center leading-tight",
-        className
-      )}
-    >
+    <h2 className={cn("font-bold flex leading-tight", className)}>
       {Icon}
       {text}
     </h2>

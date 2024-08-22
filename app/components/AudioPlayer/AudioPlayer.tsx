@@ -31,7 +31,7 @@ import { ContentItem } from "@/lib/store/slices/libraryapi";
 interface propsType {
   contentUrl: string;
   thumbnail: string;
-  nextMediaId: string;
+  nextMediaId?: string;
 }
 
 const AudioPlayer = ({ contentUrl, thumbnail, nextMediaId }: propsType) => {

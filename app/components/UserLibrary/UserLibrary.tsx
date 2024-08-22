@@ -130,7 +130,7 @@ const UserLibrary: React.FC = () => {
     fetchPopularContent();
   }, []);
 
-  const openPostAudio = (id: string) => {
+  const openPostContent = (id: string) => {
     const entityId = params.id; // Get the current entityId from params
     router.push(`/${entityId}/library/content/${id}`, { scroll: false });
   };
@@ -179,7 +179,7 @@ const UserLibrary: React.FC = () => {
             <SingleVideocard
               key={item.id}
               content={item}
-              onClick={openPostAudio} // Pass openPostAudio here
+              onClick={openPostContent} // Pass openPostAudio here
             />
           ))}
         </div>
@@ -194,7 +194,7 @@ const UserLibrary: React.FC = () => {
                 <Category
                   key={item.id}
                   content={item}
-                  onClick={openPostAudio}
+                  onClick={openPostContent}
                 />
               ))}
             </div>
@@ -208,7 +208,7 @@ const UserLibrary: React.FC = () => {
           <HorizontalScroll>
             <div className="flex flex-row gap-4 pt-[9px] rounded-full">
               {section.tagContent?.map((item) => (
-                <Card key={item.id} content={item} />
+                <Card key={item.id} content={item} entityId={params.id} />
               ))}
             </div>
           </HorizontalScroll>
@@ -219,7 +219,11 @@ const UserLibrary: React.FC = () => {
       <HorizontalScroll>
         <div className="flex flex-row gap-4 pt-[9px]">
           {popularContent.map((item) => (
-            <SingleVideocard key={item.id} content={item} />
+            <SingleVideocard
+              key={item.id}
+              content={item}
+              onClick={openPostContent}
+            />
           ))}
         </div>
       </HorizontalScroll>
